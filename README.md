@@ -6,7 +6,8 @@ Including but not limited to:
 
   - Git aliases
   - Docker aliases
-  - More coming ... 
+  - Convenient scripts
+  - ...
 
 That's all folks!
 
