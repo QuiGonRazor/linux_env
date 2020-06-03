@@ -1,0 +1,9 @@
+#!/bin/bash
+
+echo "Exporting DISPLAY"
+
+export DISPLAY=:0
+
+echo "Starting ssh server"
+
+sudo service ssh --full-restart

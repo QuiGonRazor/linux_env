@@ -1,0 +1,78 @@
+#!/bin/bash
+
+#VARS
+EMAIL="user@email.com"
+USR=$USER
+
+declare -A optsDesc
+
+optsDesc=( ["-u"]="Set Username. If not specified default will be used -- '$USR'"
+	["-e"]="Set email. If not specified a fake will be used -- '$EMAIL'" 
+	["-h|--help"]="Show this message")
+
+function printErrorAndExit()
+{
+	echo -ne "\nERROR: $1\n" >&2
+	print_usage
+	exit 1
+}
+
+function print_opts()
+{
+	for opt in "${!optsDesc[@]}"; do echo -ne "$opt\t\t\t${optsDesc[$opt]}\n"; done
+}
+
+function print_usage()
+{
+	echo -ne "\nUSAGE:\n\t$0 [OPTIONS]\n\n"
+	print_opts
+}
+
+function parseargs()
+{
+	# if [ $# -lt 1  ] ; then
+	# 	echo "Too few arguments."
+	# 	print_usage
+	# 	exit 99;
+	# fi
+
+	while (( "$#" )); do
+		case "$1" in
+			-e)
+				EMAIL=$2
+				shift 2
+				;;
+			-u)
+				USR=$2
+				shift 2
+				;;
+			-h|--help)
+				print_usage
+				exit 0
+				;;
+			-*|--*=)
+				printErrorAndExit "Unsupported flag $1"
+				;;
+			*) # preserve positional arguments of remaining items
+				PARAMS="$PARAMS $1"
+				shift
+				;;
+		esac
+	done
+
+	# set positional arguments in their proper place
+	eval set -- "$PARAMS"
+}
+
+parseargs "$@"
+
+# GIT ALIASES
+git config --global alias.logd "log --decorate --graph"
+git config --global alias.showconfig "config --global -l"
+git config --global alias.simplestat "status -s"
+git config --global user.email $EMAIL
+git config --global user.name $USR  
+git config --global alias.resethead "reset --hard HEAD"
+git config --global alias.cherrytheirs "cherry-pick --strategy=recursive -X theirs"
+git config --global alias.logall "logd --all"
+git config --global alias.move "checkout"

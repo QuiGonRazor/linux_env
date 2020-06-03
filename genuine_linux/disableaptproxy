@@ -1,0 +1,3 @@
+#!/bin/bash
+
+sudo sed -in '/Proxy/d' /etc/apt/apt.conf

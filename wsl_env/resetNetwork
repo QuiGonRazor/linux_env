@@ -1,0 +1,8 @@
+#!/bin/bash
+
+netsh.exe winsock reset
+netsh.exe int ip reset c: \ resetlog.txt
+netsh.exe advfirewall reset
+ipconfig.exe /flushdns
+ipconfig.exe /release
+ipconfig.exe /renew

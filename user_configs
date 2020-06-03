@@ -1,0 +1,30 @@
+export PATH=/usr/sbin:/usr/local/sbin:$PATH
+
+
+### PERSONAL SCRIPTS/BINARIES ###
+
+### ALIASES ###
+
+## DOCKER ##
+# BASE #
+alias dcontainer='sudo docker container'
+alias dimage='sudo docker image'
+
+# SPECIALIZED #
+alias drun='dcontainer run'
+alias dps='dcontainer ps'
+alias dattach='dcontainer attach'
+alias dbuild='dimage build --rm'
+
+alias drundetached='drun --detach --interactive --name'
+
+function dimagemeta() {
+
+	if [ $# -eq 2 ]; then
+		FORMAT_STRING='{{json '$2'}}'
+		dimage inspect --format $FORMAT_STRING $1 | jq
+	else
+		dimage inspect  $1 | jq
+	fi
+
+}

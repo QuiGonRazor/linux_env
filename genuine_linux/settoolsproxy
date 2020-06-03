@@ -1,0 +1,74 @@
+#!/bin/bash
+
+supported_services=("GIT" "Apt utility")
+total_services=`echo ${#supported_services[@]}`
+
+SERVER="proxy.server.com"
+PORT=8080
+
+function printArray()
+{
+	index=0
+
+	while [ "$index" -lt "$total_services" ]
+	do
+  		echo "$index - "${supported_services[$index]}
+		let "index = $index + 1"
+	done
+}
+
+function echoSelected()
+{
+	echo "Setting '${supported_services[$1]}' proxy"
+	echo "Launching '$2'"
+
+	eval "$2"
+	
+	if [ $? -eq 0 ]; then
+    	echo "Done!"
+	else
+	    echo "WARNING - Some errors occured!"
+	fi
+}
+
+
+while [[ (-z "$SELECTED_SERVICE") || ("$SELECTED_SERVICE" -gt total_services-1) ]];
+do
+	echo "Select for which service you want enable proxy"
+	
+	printArray
+
+	read -p "" SELECTED_SERVICE
+done
+
+read -p "Digit proxy server IP (if none default will be used - '${SERVER}'): " newServer
+
+if [ ! -z "$newServer" ]; then
+	SERVER=$newServer
+fi
+
+read -p "Digit proxy server PORT (if none default will be used - '${PORT}'): " newPort
+
+if [ ! -z "$newPort" ]; then
+	PORT=$newPort
+fi
+
+while [ -z "$PROXY_USER" ];
+do
+	read -p "Digit proxy user: " PROXY_USER
+done
+
+while [ -z "$PROXY_PSW" ];
+do
+	read -p "Digit proxy password: " PROXY_PSW
+done
+
+command=""
+
+if [ "$SELECTED_SERVICE" -eq 0 ]; then
+	command="git config --global http.proxy http://${PROXY_USER}:${PROXY_PSW}@${SERVER}:${PORT}"
+elif [ "$SELECTED_SERVICE" -eq 1 ]; then
+	command="echo 'Acquire::http::Proxy http://${PROXY_USER}:${PROXY_PSW}@${SERVER}:${PORT};' | sudo tee --append /etc/apt/apt.conf"
+fi
+
+echoSelected $SELECTED_SERVICE "$command"

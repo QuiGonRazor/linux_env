@@ -1,0 +1,15 @@
+#!/bin/bash
+
+UNAME_STRING=$(uname -a)
+
+if test "$#" -eq 1; then
+	if [[ $UNAME_STRING == *"Microsoft"* ]]; then
+		echo "Opening_M '$1'"
+		explorer.exe $1 &
+	else
+		echo "Opening '$1'"
+		nemo $1 &
+	fi
+else
+	echo "USAGE: explore [PATH]"
+fi
