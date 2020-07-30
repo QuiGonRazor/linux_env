@@ -4,5 +4,5 @@ if test "$#" -eq 1; then
 	sudo chmod 666 /dev/ttyS$1
 	sudo stty -F /dev/ttyS$1 raw 115200 -echo -echoe -echok -echoctl -echoke -iexten -onlcr cs8 crtscts
 else
-	echo "USAGE: wslEnabletty [SERIALPORT_NUM]"
+	echo "USAGE: $0 [SERIALPORT_NUM]"
 fi
