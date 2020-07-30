@@ -3,7 +3,17 @@ export PATH=/usr/sbin:/usr/local/sbin:$PATH
 
 ### PERSONAL SCRIPTS/BINARIES ###
 
+## ATB3
+export PATH=/opt/dev/atb3_utils/binaries_utils/host_script/general_purpose_bins:$PATH
+export PATH=/opt/dev/atb3_utils/binaries_utils/host_script/atb3_bins:$PATH
+export PATH=/opt/dev/atb3_utils/binaries_utils/host_script/atb3_bins/board_db_scripts:$PATH
+
 ### ALIASES ###
+alias fd=fdfind
+
+## ATB3 ##
+alias atbinstallbin='atbinstall -b -r -s -p'
+alias atbinstalllegato='atbinstall -a -p'
 
 ## DOCKER ##
 # BASE #
@@ -15,6 +25,9 @@ alias drun='dcontainer run'
 alias dps='dcontainer ps'
 alias dattach='dcontainer attach'
 alias dbuild='dimage build --rm'
+alias dstopall='docker stop $(docker ps -aq)'
+alias drmallcont='docker rm $(docker ps -aq)'
+alias drmallimages='docker rmi $(docker images -q)'
 
 alias drundetached='drun --detach --interactive --name'
 
