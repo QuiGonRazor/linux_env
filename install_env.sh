@@ -9,7 +9,7 @@ LINUX_FOLDER=$PWD/genuine_linux
 WSL_FOLDER=$PWD/wsl_env
 CONFIG_FILE="$HOME/.user_configs"
 CONFIG_FILE_BAK="$HOME/.user_configs.bak"
-CONFIG_FILE_TO_COPY=$LINUX_FOLDER/user_configs
+CONFIG_FILE_TO_COPY=./user_configs
 BASHRC_PATH="$HOME/.bashrc"
 
 USR=""
